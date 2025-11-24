@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Queries</title>
+    <style>
+        body { font-family: Menlo; background:#111; color:#eee; text-align:center; }
+        table { margin:auto; border-collapse:collapse; margin-top:20px; }
+        th, td { border:1px solid #555; padding:6px 12px; }
+        th { background:#333; }
+        pre { background:#000; padding:15px; width:60%; margin:auto; }
+        button { padding:6px 12px; }
+    </style>
+</head>
+<body>
+
+<h1>Query Tables</h1>
+
+<form method="post">
+    <label>Select Query:</label>
+    <select name="query_id">
+        {% for qid, (title, sql) in queries.items() %}
+        <option value="{{ qid }}">{{ qid }}. {{ title }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Run Query</button>
+</form>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if rows %}
+<h2>{{ title }}</h2>
+<table>
+    <tr>
+        {% for c in cols %}<th>{{ c }}</th>{% endfor %}
+    </tr>
+    {% for r in rows %}
+    <tr>
+        {% for c in r %}<td>{{ c }}</td>{% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<a href="/"><button>Back</button></a>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Delete Records</title>
+    <style>
+        body { font-family: Menlo, monospace; background:#111; color:#eee; text-align:center; }
+        table { border-collapse:collapse; margin:20px auto; }
+        th, td { border:1px solid #555; padding:6px 12px; }
+        th { background:#333; }
+        input { padding:4px 6px; margin:5px; }
+        button { padding:6px 12px; margin:5px; }
+        .msg { color:#8f8; margin-top:10px; }
+        .err { color:#ff8080; margin-top:10px; }
+    </style>
+</head>
+<body>
+
+<h1>Delete Customer Records</h1>
+
+<form method="post">
+    <label>Customer_ID to delete:</label>
+    <input type="number" name="customer_id" required>
+    <button type="submit">Delete</button>
+</form>
+
+{% if message %}
+  <div class="msg">{{ message }}</div>
+{% endif %}
+{% if error %}
+  <div class="err">{{ error }}</div>
+{% endif %}
+
+{% if rows %}
+  <h2>Current Customers</h2>
+  <table>
+    <tr>
+      {% for c in cols %}<th>{{ c }}</th>{% endfor %}
+    </tr>
+    {% for r in rows %}
+      <tr>
+        {% for c in r %}<td>{{ c }}</td>{% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+<a href="/"><button>Back to Main Menu</button></a>
+
+</body>
+</html>

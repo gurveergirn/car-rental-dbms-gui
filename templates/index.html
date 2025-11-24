@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <title>Car Rental Database Interface</title>
+    <style>
+      body {
+        font-family: Menlo, monospace;
+        background: #111;
+        color: #eee;
+        text-align: center;
+      }
+      pre {
+        background: #000;
+        padding: 15px;
+        margin: 20px auto;
+        width: 60%;
+      }
+      form {
+        display: inline;
+      }
+      button {
+        background: #444;
+        color: #fff;
+        padding: 8px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        border: none;
+      }
+      button:hover {
+        background: #777;
+        cursor: pointer;
+      }
+      .msg {
+        margin-top: 10px;
+        color: #ff8080;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: 20px auto;
+        width: 80%;
+      }
+      th,
+      td {
+        border: 1px solid #555;
+        padding: 6px 12px;
+      }
+      th {
+        background: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Car Rental Database Interface</h1>
+
+    {% if session.logged_in %}
+    <form method="get" action="/logout"><button>Logout</button></form>
+    {% endif %}
+
+    <form method="post" action="/drop"><button>1. Drop Tables</button></form>
+    <form method="post" action="/create">
+      <button>2. Create Tables</button>
+    </form>
+    <form method="post" action="/populate">
+      <button>3. Populate Tables</button>
+    </form>
+    <form method="get" action="/queries"><button>4. Query Tables</button></form>
+    <form method="get" action="/delete">
+      <button>5. Delete Records</button>
+    </form>
+    <form method="get" action="/add"><button>6. Add Records</button></form>
+
+    {% if message %}
+    <p class="msg">{{ message }}</p>
+    {% endif %} {% if table_error %}
+    <p class="msg">{{ table_error }}</p>
+    {% endif %} {% if table_rows %}
+    <h2>Current Tables</h2>
+    <table>
+      <tr>
+        {% for c in table_cols %}
+        <th>{{ c }}</th>
+        {% endfor %}
+      </tr>
+      {% for r in table_rows %}
+      <tr>
+        {% for cell in r %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="msg">No tables found in this schema.</p>
+    {% endif %} {% if table_data %}
+    <h2>Table Contents</h2>
+
+    {% for tname, t in table_data.items() %}
+    <h3>{{ tname }}</h3>
+
+    {% if t.rows %}
+    <table>
+      <tr>
+        {% for c in t.cols %}
+        <th>{{ c }}</th>
+        {% endfor %}
+      </tr>
+      {% for row in t.rows %}
+      <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="msg">No rows in {{ tname }}.</p>
+    {% endif %} {% endfor %} {% endif %}
+  </body>
+</html>
