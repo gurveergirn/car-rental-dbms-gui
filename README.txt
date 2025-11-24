@@ -1,6 +1,6 @@
 To run this program - Car Rental Database System,
 
-1. Connect to CS VPN
+1. Connect to TMU CS VPN
 2. Login to SQL Developer: Make sure you are using Oracle 12c
 (oracle12c.cs.torontomu.ca/orcl12c)
 3. install flask and python, run command: pip install flask oracledb
