@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import oracledb
 
 #  DB Connection
-DB_USER = "gsgirn"
-DB_PASSWORD = "02078027"
+DB_USER = ""
+DB_PASSWORD = ""
 DB_DSN = "oracle12c.cs.torontomu.ca/orcl12c"
 
 app = Flask(__name__)
